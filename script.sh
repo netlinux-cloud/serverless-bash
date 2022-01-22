@@ -43,6 +43,4 @@ then
     exit
 fi
 
-which ncat || apk add ncat
-
-ncat -v -k -l -p 80 -c 'read request; '"$0"' "$request"'
+nc -v -k -l -p 80 -c 'read request; '"$0"' "$request"'
