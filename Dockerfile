@@ -1,6 +1,6 @@
-FROM alpine
+FROM ubuntu
 # Install any required dependencies.
-RUN apk --no-cache add ca-certificates bash netcat-openbsd
+RUN apt install ca-certificates bash netcat-traditional
 WORKDIR /
 COPY script.sh /
 CMD ["/script.sh"]
