@@ -41,6 +41,14 @@ then
     fi
 
     exit
-fi
+else
 
-nc -v -k -l -p 80 -c 'read request; '"$0"' "$request"'
+    echo "prepare"
+
+    while nc -v -k -l -p 80 -c 'read request; '"$0"' "$request"'
+    do
+        echo "next"
+    done
+
+    echo "done"
+fi
