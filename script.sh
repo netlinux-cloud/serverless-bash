@@ -45,7 +45,7 @@ else
 
     echo "prepare"
 
-    while nc -v -k -l -p 8080 -c 'read request; '"$0"' "$request"'
+    while nc -v -k -l -p 80 -c 'read request; '"$0"' "$request"'
     do
         echo "next"
     done
