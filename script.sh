@@ -37,7 +37,7 @@ then
     elif [[ "$context" == "/build" ]]
     then
         set -x
-    
+
         {
 
         echo "@"
@@ -51,7 +51,7 @@ then
         ls
         id
 
-        apk --no-cache add gcc g++ make
+        apt install -y gcc g++ make
 
         echo '#include <stdio.h>
         int main()
