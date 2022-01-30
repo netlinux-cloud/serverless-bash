@@ -40,17 +40,6 @@ then
 
         {
 
-        echo "@"
-        echo "$@"
-
-        date
-
-        echo "TEST script"
-
-        pwd
-        ls
-        id
-
         apt install -y gcc g++ make
 
         echo '#include <stdio.h>
