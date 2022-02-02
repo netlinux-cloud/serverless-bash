@@ -65,7 +65,7 @@ then
 
         exit 0
 
-        } 2>@1
+        } 2>&1
 
     else
         echo "request=|${requestsring}| context=|${context}| parameter=|${parameter}|"
