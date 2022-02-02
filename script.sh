@@ -55,9 +55,9 @@ then
         ./test
         rm -vf test
 
-        echo '
+        echo -e '
         test: test.cpp
-            gcc test.cpp -o test
+\tgcc test.cpp -o test
         ' >Makefile
 
         make
